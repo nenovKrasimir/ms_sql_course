@@ -327,3 +327,106 @@ VALUES
 -- Set the most appropriate data types for each column. Set a primary key to each table.
 --   Populate each table with only 3 records. Make sure the columns that are present in 2 tables would be of the same data type.
 --   Consider which fields are always required and which are optional. Submit your CREATE TABLE and INSERT statements as Run queries & check D
+
+-- Create the CarRental database
+CREATE DATABASE CarRental;
+
+USE CarRental;
+
+-- Create the Categories table
+CREATE TABLE Categories (
+    Id INT PRIMARY KEY,
+    CategoryName VARCHAR(255) NOT NULL,
+    DailyRate DECIMAL(10, 2) NOT NULL,
+    WeeklyRate DECIMAL(10, 2) NOT NULL,
+    MonthlyRate DECIMAL(10, 2) NOT NULL,
+    WeekendRate DECIMAL(10, 2) NOT NULL
+);
+
+-- Create the Cars table
+CREATE TABLE Cars (
+    Id INT PRIMARY KEY,
+    PlateNumber VARCHAR(15) NOT NULL,
+    Manufacturer VARCHAR(255) NOT NULL,
+    Model VARCHAR(255) NOT NULL,
+    CarYear INT NOT NULL,
+    CategoryId INT,
+    Doors INT NOT NULL,
+    Picture VARBINARY(MAX),
+    Condition VARCHAR(50),
+    Available BIT NOT NULL
+);
+
+-- Create the Employees table
+CREATE TABLE Employees (
+    Id INT PRIMARY KEY,
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    Title VARCHAR(50),
+    Notes VARCHAR(MAX)
+);
+
+-- Create the Customers table
+CREATE TABLE Customers (
+    Id INT PRIMARY KEY,
+    DriverLicenceNumber VARCHAR(20) NOT NULL,
+    FullName VARCHAR(255) NOT NULL,
+    Address VARCHAR(255) NOT NULL,
+    City VARCHAR(50) NOT NULL,
+    ZIPCode VARCHAR(15) NOT NULL,
+    Notes VARCHAR(MAX)
+);
+
+-- Create the RentalOrders table
+CREATE TABLE RentalOrders (
+    Id INT PRIMARY KEY,
+    EmployeeId INT,
+    CustomerId INT,
+    CarId INT,
+    TankLevel DECIMAL(5, 2),
+    KilometrageStart INT,
+    KilometrageEnd INT,
+    TotalKilometrage INT,
+    StartDate DATETIME NOT NULL,
+    EndDate DATETIME NOT NULL,
+    TotalDays INT NOT NULL,
+    RateApplied DECIMAL(10, 2) NOT NULL,
+    TaxRate DECIMAL(5, 2) NOT NULL,
+    OrderStatus VARCHAR(50) NOT NULL,
+    Notes VARCHAR(MAX)
+);
+
+-- Insert records into the Categories table
+INSERT INTO Categories (Id, CategoryName, DailyRate, WeeklyRate, MonthlyRate, WeekendRate)
+VALUES
+    (1, 'Economy', 35.00, 200.00, 750.00, 50.00),
+    (2, 'Compact', 45.00, 250.00, 900.00, 60.00),
+    (3, 'Full-size', 55.00, 300.00, 1100.00, 70.00);
+
+-- Insert records into the Cars table
+INSERT INTO Cars (Id, PlateNumber, Manufacturer, Model, CarYear, CategoryId, Doors, Picture, Condition, Available)
+VALUES
+    (1, 'ABC123', 'Toyota', 'Corolla', 2022, 1, 4, NULL, 'Good', 1),
+    (2, 'XYZ456', 'Honda', 'Civic', 2021, 2, 4, NULL, 'Excellent', 1),
+    (3, 'DEF789', 'Ford', 'Focus', 2020, 1, 4, NULL, 'Good', 1);
+
+-- Insert records into the Employees table
+INSERT INTO Employees (Id, FirstName, LastName, Title, Notes)
+VALUES
+    (1, 'John', 'Doe', 'Manager', NULL),
+    (2, 'Jane', 'Smith', 'Sales Associate', NULL),
+    (3, 'Bob', 'Johnson', 'Rental Agent', NULL);
+
+-- Insert records into the Customers table
+INSERT INTO Customers (Id, DriverLicenceNumber, FullName, Address, City, ZIPCode, Notes)
+VALUES
+    (1, 'DL123456', 'Alice Johnson', '123 Main St', 'Cityville', '12345', NULL),
+    (2, 'DL987654', 'David Smith', '456 Elm St', 'Townsville', '54321', NULL),
+    (3, 'DL789012', 'Eve Wilson', '789 Oak St', 'Villagetown', '67890', NULL);
+
+-- Insert records into the RentalOrders table
+INSERT INTO RentalOrders (Id, EmployeeId, CustomerId, CarId, TankLevel, KilometrageStart, KilometrageEnd, TotalKilometrage, StartDate, EndDate, TotalDays, RateApplied, TaxRate, OrderStatus, Notes)
+VALUES
+    (1, 1, 1, 1, 90.0, 1000, 1250, 250, '2023-09-01 09:00:00', '2023-09-03 15:00:00', 3, 200.00, 10.0, 'Completed', NULL),
+    (2, 2, 2, 2, 85.0, 800, 950, 150, '2023-09-02 10:30:00', '2023-09-04 16:45:00', 3, 250.00, 10.0, 'Completed', NULL),
+    (3, 3, 3, 3, 95.0, 1200, 1350, 150, '2023-09-03 11:15:00', '2023-09-05 14:20:00', 2, 180.00, 10.0, 'Completed', NULL);
