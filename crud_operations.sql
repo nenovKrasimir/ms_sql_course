@@ -74,6 +74,10 @@ SELECT FirstName, LastName, Salary FROM Employees
 -- Kevin F Brown
 
 -- Roberto NULL Tamburello
+  
+USE SoftUni
+
+SELECT FirstName, MiddleName, LastName FROM Employees
 
 --========================================================================================
 
@@ -90,6 +94,11 @@ SELECT FirstName, LastName, Salary FROM Employees
 -- Kevin.Brown@softuni.bg
 
 -- Roberto.Tamburello@softuni.bg
+  
+SELECT
+    CONCAT(FirstName, '.', LastName, '@softuni.bg') AS "Full Email Address"
+FROM
+    Employees;
 
 --========================================================================================
 
@@ -107,13 +116,16 @@ SELECT FirstName, LastName, Salary FROM Employees
 
 -- 9500.00
 
+SELECT DISTINCT
+   Salary AS "Salary"
+FROM
+    Employees;
+
 --========================================================================================
 
 -- 8. Find All Information About Employees
 
 -- Create a SQL query that finds all information about the employees whose job title is "Sales Representative".
-
---========================================================================================
 
 -- ID First Name Last Name Middle Name Job Title DeptID Mngr ID HireDate Salary AddressID
 
@@ -122,6 +134,8 @@ SELECT FirstName, LastName, Salary FROM Employees
 -- 276 Linda Mitchell C Sales Representative 3 268 … 23100.00 170
 
 -- 277 Jillian Carson NULL Sales Representative 3 268 … 23100.00 61
+
+SELECT * FROM Employees WHERE JobTitle = 'Sales Representative'
 
 --========================================================================================
 
@@ -139,6 +153,8 @@ SELECT FirstName, LastName, Salary FROM Employees
 
 -- JoLynn Dobney Production Supervisor
 
+SELECT FirstName, LastName, JobTitle FROM Employees WHERE 20000 <= Salary AND Salary <= 30000;
+
 --========================================================================================
 
 -- 10. Find Names of All Employees
@@ -155,6 +171,14 @@ SELECT FirstName, LastName, Salary FROM Employees
 
 -- JoLynn M Dobney
 
+SELECT
+    CONCAT_WS(' ', FirstName, MiddleName, LastName) AS "Full Name"
+FROM
+    Employees
+WHERE
+    Salary IN (25000, 14000, 12500, 23600);
+
+
 -- 11. Find All Employees Without a Manager
 
 -- Create a SQL query that finds the first and last names of those employees who do not have a manager.
@@ -166,6 +190,14 @@ SELECT FirstName, LastName, Salary FROM Employees
 -- Ken Sanchez
 
 -- Svetlin Nakov
+
+SELECT
+    FirstName, LastName
+FROM
+    Employees
+WHERE
+    ManagerID IS NULL
+
 
 --========================================================================================
 
@@ -181,6 +213,12 @@ SELECT FirstName, LastName, Salary FROM Employees
 
 -- James Hamilton 84100.00
 
+
+SELECT FirstName, LastName, Salary
+FROM Employees
+WHERE Salary > 50000
+ORDER BY Salary DESC;
+
 --========================================================================================
 
 -- 13. Find 5 Best Paid Employees.
@@ -194,6 +232,10 @@ SELECT FirstName, LastName, Salary FROM Employees
 -- Ken Sanchez
 
 -- James Hamilton
+
+SELECT TOP 5 FirstName, LastName
+FROM Employees
+ORDER BY Salary DESC
 
 --========================================================================================
 
@@ -210,6 +252,10 @@ SELECT FirstName, LastName, Salary FROM Employees
 -- Roberto Tamburello
 
 -- Rob Walters
+
+SELECT FirstName, LastName
+FROM Employees
+WHERE DepartmentID != 4
 
 -- 15. Sort Employees Table
 
