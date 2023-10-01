@@ -279,6 +279,11 @@ WHERE DepartmentID != 4
 
 -- 273 Brian Welcker S Vice President of Sales 3 109 … 72100.00 134
 
+  
+SELECT *
+FROM Employees
+ORDER BY Salary DESC, FirstName, LastName DESC, MiddleName;
+
 --========================================================================================
 
 -- 16. Create View Employees with Salaries
@@ -292,6 +297,11 @@ WHERE DepartmentID != 4
 -- Guy Gilbert 12500.00
 
 -- Kevin Brown 13500.00
+
+CREATE VIEW V_EmployeesSalaries AS
+SELECT FirstName, LastName, Salary
+FROM Employees;
+
 
 --========================================================================================
 
@@ -309,6 +319,13 @@ WHERE DepartmentID != 4
 
 -- Roberto Tamburello Engineering Manager
 
+
+CREATE VIEW V_EmployeeNameJ5obTitle AS
+SELECT CONCAT (' ', FirstName, MiddleName, LastName) AS 'Full Name', JobTitle AS 'Job Title'
+FROM Employees;
+
+SELECT * FROM V_EmployeeNameJ5obTitle
+
 --========================================================================================
 
 -- 18. Distinct Job Titles
@@ -324,6 +341,9 @@ WHERE DepartmentID != 4
 -- Accounts Manager
 
 -- Accounts Payable Specialist
+
+SELECT DISTINCT JobTitle
+FROm Employees;
 
 --========================================================================================
 
@@ -341,6 +361,11 @@ WHERE DepartmentID != 4
 
 -- 5 HL Mountain Frame Research, design and development of HL M… 2001-06-01 00:00:00 2003-06-01 00:00:00
 
+SELECT TOP 10 *
+FROM Projects
+WHERE EndDate IS NOT NULL
+ORDER BY StartDate, Name
+
 --========================================================================================
 
 -- 20. Last 7 Hired Employees
@@ -356,6 +381,10 @@ WHERE DepartmentID != 4
 -- Lynn Tsoflias 2005-07-01 00:00:00
 
 -- Syed Abbas 2005-04-15 00:00:00
+
+SELECT TOP 7 FirstName, LastName, HireDate
+FROM Employees
+ORDER BY HireDate DESC
 
 --========================================================================================
 
@@ -375,6 +404,14 @@ WHERE DepartmentID != 4
 
 -- 33376.00
 
+UPDATE Employees
+SET Salary = Salary * 1.12
+WHERE DepartmentID IN (2,4,11,1)
+
+
+SELECT Salary
+FROM Employees
+
 --========================================================================================
 
 -- Part II – Queries for Geography Database
@@ -393,6 +430,8 @@ WHERE DepartmentID != 4
 
 -- Batashki Snezhnik
 
+SELECT PeakName FROM Peaks ORDER BY PeakName
+
 --========================================================================================
 
 -- 23. Biggest Countries by Population
@@ -408,6 +447,11 @@ WHERE DepartmentID != 4
 -- Germany 81802257
 
 -- France 64768389
+
+SELECT TOP 30 CountryName, Population
+FROM Countries
+WHERE ContinentCode = 'EU'
+ORDER BY Population DESC, CountryName
 
 --========================================================================================
 
@@ -427,6 +471,18 @@ WHERE DepartmentID != 4
 
 -- Albania AL Not Euro
 
+SELECT
+    CountryName,
+    CountryCode,
+    CASE
+        WHEN CurrencyCode IN ('EUR') THEN 'Euro'
+        ELSE 'Not Euro'
+    END AS Currency
+FROM
+    Countries
+ORDER BY
+    CountryName;
+
 --========================================================================================
 
 -- Part III – Queries for Diablo Database
@@ -444,5 +500,9 @@ WHERE DepartmentID != 4
 -- Assassin
 
 -- Barbarian
+
+USE Diablo
+
+SELECT Name FROM Characters ORDER BY Name
 
 --========================================================================================
